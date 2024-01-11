@@ -1,0 +1,13 @@
+//below are few examples of test scenarios
+GET - http://localhost:4000/api/users
+POST - http://localhost:4000/api/users
+e.g req body -
+{
+"username": "john_mosh",
+"age": 30,
+"hobbies": ["Reading", "Traveling"]
+}
+GET - http://localhost:4000/api/users/{d735e853-a5ff-4e56-9575-e7614c2745fb}
+PUT - http://localhost:4000/api/users/{d735e853-a5ff-4e56-9575-e7614c2745fb}
+DELETE - http://localhost:4000/api/users/{5e8a8528-5328-41e1-a796-228701a9bee1}
+GET - http://localhost:4000/something/
