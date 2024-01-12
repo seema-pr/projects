@@ -3,17 +3,16 @@ import { Request, Response } from 'express';
 import { getUsers, User } from '../models/users';
 import { v4 as uuidv4 } from 'uuid';
 
+// Import UUID validation library
 const validate = require('uuid-validate');
-const users = getUsers();
-const getAllUsers = (req: Request, res: Response) => {
-    res.status(200).json(users);
-};
 
+// Function to validate a UUID
 const validateUUID = (userId: string): boolean => {
     const isValidUUID = validate(userId);
     return isValidUUID;
 };
 
+// Function to validate the required fields in the request body
 const validateRequestBody = (req: Request): string[] => {
     const { username, age, hobbies } = req.body;
     const missingFields = [];
@@ -33,6 +32,15 @@ const validateRequestBody = (req: Request): string[] => {
     return missingFields;
 };
 
+// Get the users data 
+const users = getUsers();
+
+// Controller function to get all users
+const getAllUsers = (req: Request, res: Response) => {
+    res.status(200).json(users);
+};
+
+// Function to get a user by ID
 const getUserById = (req: Request, res: Response) => {
     const userId = req.params.userId.replace(/[{}]/g, '');  // Remove curly braces
 
@@ -59,6 +67,8 @@ const getUserById = (req: Request, res: Response) => {
     }
 };
 
+
+// Function to create a new user
 const createUser = (req: Request, res: Response) => {
     const missingFields = validateRequestBody(req);
 
@@ -79,6 +89,8 @@ const createUser = (req: Request, res: Response) => {
     res.status(201).json(newUser);
 };
 
+
+// Function to update a user by ID
 const updateUser = (req: Request, res: Response) => {
     const userId = req.params.userId.replace(/[{}]/g, '');  // Remove curly braces
     const isValidUUID = validateUUID(userId);
@@ -120,6 +132,7 @@ const updateUser = (req: Request, res: Response) => {
     }
 };
 
+// Function to delete a user by ID
 const deleteUser = (req: Request, res: Response) => {
     const userId = req.params.userId.replace(/[{}]/g, '');  // Remove curly braces
 
@@ -145,8 +158,10 @@ const deleteUser = (req: Request, res: Response) => {
 
     // Remove the user from the array
     const updatedUsers = users.splice(userIndex, 1);
-    const deletedMsg = { message: "User got deleted" }
-    res.status(204).json(deletedMsg);
+    // send response messeage 
+    //res.status(200).json({ message: "User got deleted" });
+    // send response with no content
+    res.status(204).json();
 
 };
 
